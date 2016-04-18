@@ -98,6 +98,8 @@ private slots:
 
     void on_startStopLive_clicked();
 
+    void on_bmpsnap_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer *uTimer;

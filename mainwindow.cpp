@@ -94,7 +94,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiTimer,SIGNAL(timeout()),this,SLOT(on_uiUpdate()));
     uiTimer->start(1000);
     connect(&liveView,SIGNAL(timeout()),this,SLOT(liveViewTimeout()));
-    liveView.setInterval(333);
+    liveView.setInterval(100);
     connect(ui->liveSingle, SIGNAL(clicked()), this, SLOT(liveViewTimeout()));
 }
 
@@ -1078,12 +1078,14 @@ void MainWindow::on_startStopLive_clicked()
 }
 
 #include <QPainter>
+#include <QTime>
 void MainWindow::liveViewTimeout()
 {
-    QPixmap pm(QSize(1400, 600));
-    QPainter p(&pm);
+    int w = 1400, h = 800;
+    QTime t;
+    t.start();
 
-    p.fillRect(0, 0, 1400, 600, Qt::black);
+    QVector<QPoint> points[3];
 
     for (int chan = 1; chan <= 2; chan++)
     {
@@ -1091,19 +1093,75 @@ void MainWindow::liveViewTimeout()
             continue;
 
         scope.command(":WAV:SOUR CHAN" + QString::number(chan));
-        scope.command(":WAV:MODE NORM");
         long bytes = scope.command(":WAV:DATA?");
 
-        QPoint lpt;
         for (int i = 12; i < bytes; i++)
+            points[chan].push_back(QPoint(i - 12, h - (float)h / 256 * (unsigned char)scope.com.buffer[i]));
+    }
+
+    ui->delay->setText(QString::number(t.elapsed()) + " ms");
+
+    QPixmap pm(QSize(w, h));
+    QPainter p(&pm);
+
+    p.fillRect(0, 0, w, h, Qt::black);
+
+    QPen pen(Qt::lightGray);
+    pen.setStyle(Qt::DotLine);
+    p.setPen(pen);
+    int divy = 10;
+    for (int y = 1; y < divy; y++)
+        p.drawLine(0, h / divy * y, w, h / divy * y);
+    for (int x = 1; x < 14; x++)
+        p.drawLine(w / 14 * x, 0, w / 14 * x, h);
+
+    pen.setWidth(3);
+    p.setPen(pen);
+    p.drawLine(0, h / 2, w, h / 2);
+    p.drawLine(w / 2, 0, w / 2, h);
+
+    pen = QPen(Qt::black);
+    pen.setWidth(3);
+    pen.color().setAlphaF(0.5);
+    p.setPen(pen);
+
+    for (int chan = 1; chan <= 2; chan++)
+    {
+        QVector<QPoint> &pts = points[chan];
+
+        bool first = true;
+        QPoint lpt;
+        foreach (QPoint pt, pts)
         {
-            QPoint pt(i - 12, 300 + 600.0 * scope.com.buffer[i] / 256);
-            if (i > 12)
+            if (first)
             {
-                p.setPen(chan == 1 ? Qt::yellow : Qt::cyan);
-                p.drawLine(lpt, pt);
+                first = false;
+                lpt = pt;
+                continue;
             }
 
+            p.drawLine(lpt, pt);
+            lpt = pt;
+        }
+    }
+
+    for (int chan = 1; chan <= 2; chan++)
+    {
+        p.setPen(chan == 1 ? Qt::yellow : Qt::cyan);
+        QVector<QPoint> &pts = points[chan];
+
+        bool first = true;
+        QPoint lpt;
+        foreach (QPoint pt, pts)
+        {
+            if (first)
+            {
+                first = false;
+                lpt = pt;
+                continue;
+            }
+
+            p.drawLine(lpt, pt);
             lpt = pt;
         }
     }
@@ -1111,6 +1169,15 @@ void MainWindow::liveViewTimeout()
     ui->dsp->setPixmap(pm);
 }
 
+#include <QImage>
+void MainWindow::on_bmpsnap_clicked()
+{
+    QTime t;
+    t.start();
+    long bytes = scope.command(":DISP:DATA?");
+    ui->dsp->setPixmap(QPixmap::fromImage(QImage::fromData((uchar*)(scope.com.buffer + 11), bytes - 12, "BMP")));
+    ui->delay->setText(QString::number(t.elapsed()) + " ms");
+}
 
 
 
