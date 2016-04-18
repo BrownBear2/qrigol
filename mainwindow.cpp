@@ -643,7 +643,33 @@ void MainWindow::on_hscale_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
     if (!scope.connected()||nocommands) return;
-    scope.setTimeScale(ui->hscale->currentText());
+    QString v = ui->hscale->currentText();
+
+    if (v.endsWith("ms"))
+    {
+        v = v.mid(0, v.length() - 2);
+        v = QString::number(v.toFloat() / 1e3, 'f');
+    }
+
+    else if (v.endsWith("us"))
+    {
+        v = v.mid(0, v.length() - 2);
+        v = QString::number(v.toFloat() / 1e6, 'f');
+    }
+
+    else if (v.endsWith("ns"))
+    {
+        v = v.mid(0, v.length() - 2);
+        v = QString::number(v.toFloat() / 1e9, 'f');
+    }
+
+    else if (v.endsWith("s"))
+    {
+        v = v.mid(0, v.length() - 1);
+    }
+
+
+    scope.setTimeScale(v);
 }
 
 void MainWindow::on_cdisp1_clicked()
