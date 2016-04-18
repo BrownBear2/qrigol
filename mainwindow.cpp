@@ -931,12 +931,6 @@ void MainWindow::on_measLogEnable_clicked()
     }
 }
 
-
-void MainWindow::on_mathdisp_clicked()
-{
-    if (!scope.connected()) return;
-}
-
 void MainWindow::on_mathsel_currentIndexChanged(const QString &arg1)
 {
     if (!scope.connected()||nocommands) return;

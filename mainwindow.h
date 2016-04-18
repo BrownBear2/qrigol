@@ -83,7 +83,6 @@ private slots:
     void on_tpulsemode_currentIndexChanged(int index);
     void on_mlogfileselect_clicked();
     void on_measLogEnable_clicked();
-    void on_mathdisp_clicked();
     void on_mathsel_currentIndexChanged(const QString &arg1);
     void on_tslopemode_currentIndexChanged(const QString &arg1);
     void on_tslopewin_currentIndexChanged(const QString &arg1);
