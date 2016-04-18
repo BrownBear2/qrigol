@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>791</width>
-    <height>791</height>
+    <height>793</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -3617,6 +3617,19 @@
         </widget>
        </item>
        <item>
+        <spacer name="horizontalSpacer_11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
         <widget class="QLabel" name="label_57">
          <property name="text">
           <string>Y1:</string>
@@ -3629,6 +3642,26 @@
           <string>1V</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="o1">
+         <property name="text">
+          <string>+1V</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_12">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QLabel" name="label_59">
@@ -3645,6 +3678,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="o2">
+         <property name="text">
+          <string>+1V</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_10">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -3656,6 +3696,41 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_13">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="spinBox">
+         <property name="suffix">
+          <string> ms</string>
+         </property>
+         <property name="prefix">
+          <string>Refresh rate: </string>
+         </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>10000</number>
+         </property>
+         <property name="singleStep">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_56">
@@ -3684,7 +3759,6 @@
     <zorder>verticalSpacer_6</zorder>
     <zorder>verticalSpacer_7</zorder>
     <zorder>label_55</zorder>
-    <zorder>horizontalLayoutWidget</zorder>
    </widget>
   </widget>
   <action name="action_About">

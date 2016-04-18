@@ -11,6 +11,7 @@
 #include "helpdialog.h"
 
 #include <QTimer>
+#include <QLabel>
 
 
 namespace Ui {
@@ -100,13 +101,15 @@ private slots:
 
     void on_bmpsnap_clicked();
 
+    void on_rfr_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     QTimer *uTimer;
     QTimer *uiTimer;
 
     bool nocommands;
-    void setupChannel(int ch, QComboBox *probebox, QComboBox *scalebox, QDoubleSpinBox *coffset);
+    void setupChannel(int ch, QComboBox *probebox, QComboBox *scalebox, QDoubleSpinBox *coffset, QLabel *scd, QLabel *od);
     void restoreSavedSettings(void);
     QFile *mlog;
     MLogger mlogworker;

@@ -95,7 +95,8 @@ MainWindow::MainWindow(QWidget *parent) :
     uiTimer->start(1000);
     connect(&liveView,SIGNAL(timeout()),this,SLOT(liveViewTimeout()));
     liveView.setInterval(100);
-    connect(ui->liveSingle, SIGNAL(clicked()), this, SLOT(liveViewTimeout()));
+    on_connectButton_clicked();
+    liveView.start();
 }
 
 MainWindow::~MainWindow()
@@ -323,7 +324,7 @@ void MainWindow::on_hardcopyBTN_clicked()  // scope's "hardcopy" function
 }
 
 
-void MainWindow::setupChannel(int ch,QComboBox *probebox,QComboBox *scalebox,QDoubleSpinBox *coffset)
+void MainWindow::setupChannel(int ch,QComboBox *probebox,QComboBox *scalebox,QDoubleSpinBox *coffset, QLabel* scd, QLabel *od)
 {
     QString cmdbase=":CHAN";
     QString cmd;
@@ -419,6 +420,8 @@ void MainWindow::setupChannel(int ch,QComboBox *probebox,QComboBox *scalebox,QDo
     while (scalebox->itemText(n).toFloat()!=probe)
         if (++n>=scalebox->count()) break;
     scalebox->setCurrentIndex(n);
+    scd->setText(scalebox->currentText() + " V");
+    od->setText(ui->c1offspin->text());
 
 }
 
@@ -505,6 +508,7 @@ void MainWindow::on_updAcq_clicked()  // this function updates the ui from the s
         sscale.append("s");
     }
    ui->hscale->setCurrentIndex(ui->hscale->findText(sscale));
+   ui->xsc->setText(ui->hscale->currentText());
    ui->cdisp1->setChecked(scope.isChannelDisplayed(1));  // programming guide is wrong!
    ui->cdisp2->setChecked(scope.isChannelDisplayed(2));  // programming guide is wrong!
    ui->c1bw->setCurrentIndex(ui->c1bw->findText(scope.bandwidthLimit(1)));
@@ -529,14 +533,17 @@ void MainWindow::on_updAcq_clicked()  // this function updates the ui from the s
    // based on scopedata.config.vscale[chan]
 
 
-   setupChannel(1,ui->c1probe,ui->c1vscale,ui->c1offspin);
-   setupChannel(2,ui->c2probe,ui->c2vscale,ui->c2offspin);
+   setupChannel(1,ui->c1probe,ui->c1vscale,ui->c1offspin, ui->y1sc, ui->o1);
+   setupChannel(2,ui->c2probe,ui->c2vscale,ui->c2offspin, ui->y2sc, ui->o2);
    ui->c1coup->setCurrentIndex(ui->c1coup->findText(scope.coupling(1), Qt::MatchStartsWith));
    ui->c2coup->setCurrentIndex(ui->c2coup->findText(scope.coupling(2),  Qt::MatchStartsWith));
    // convert to uS
    ui->hoffsetspin->setValue(scope.config.hoffset*1000000.0f);
    ui->c1offspin->setValue(scope.config.voffset[0]);
    ui->c2offspin->setValue(scope.config.voffset[1]);
+   ui->o1->setText(ui->c1offspin->text());
+   ui->o2->setText(ui->c2offspin->text());
+
 
 
 
@@ -725,6 +732,8 @@ void MainWindow::on_c1offspin_valueChanged(double arg1)
     Q_UNUSED(arg1);
     if (!scope.connected()||nocommands) return;
     scope.setChanOffset(1,ui->c1offspin->value());
+    ui->o1->setText(ui->c1offspin->text());
+
 }
 
 void MainWindow::on_c2offspin_valueChanged(double arg1)
@@ -732,6 +741,7 @@ void MainWindow::on_c2offspin_valueChanged(double arg1)
     Q_UNUSED(arg1);
     if (!scope.connected()||nocommands) return;
     scope.setChanOffset(2,ui->c2offspin->value());
+    ui->o2->setText(ui->c2offspin->text());
 }
 
 void MainWindow::on_c1vscale_currentIndexChanged(int index)
@@ -1081,6 +1091,9 @@ void MainWindow::on_startStopLive_clicked()
 #include <QTime>
 void MainWindow::liveViewTimeout()
 {
+    if (!scope.com.connected())
+        return;
+
     int w = 1400, h = 800;
     QTime t;
     t.start();
@@ -1089,7 +1102,9 @@ void MainWindow::liveViewTimeout()
 
     for (int chan = 1; chan <= 2; chan++)
     {
-        if (!scope.isChannelDisplayed(chan))
+        if (!ui->cdisp1->isChecked() && chan == 1)
+            continue;
+        if (!ui->cdisp2->isChecked() && chan == 2)
             continue;
 
         scope.command(":WAV:SOUR CHAN" + QString::number(chan));
@@ -1172,6 +1187,12 @@ void MainWindow::liveViewTimeout()
 #include <QImage>
 void MainWindow::on_bmpsnap_clicked()
 {
+    if (!scope.com.connected())
+        return;
+
+    if (liveView.isActive())
+        liveView.stop();
+
     QTime t;
     t.start();
     long bytes = scope.command(":DISP:DATA?");
@@ -1179,6 +1200,21 @@ void MainWindow::on_bmpsnap_clicked()
     ui->delay->setText(QString::number(t.elapsed()) + " ms");
 }
 
+void MainWindow::on_rfr_valueChanged(int value)
+{
+    liveView.setInterval(value);
+}
+
+void MainWindow::on_liveSingle_clicked()
+{
+    if (!scope.com.connected())
+        return;
+
+    if (liveView.isActive())
+        liveView.stop();
+
+    liveViewTimeout();
+}
 
 
 

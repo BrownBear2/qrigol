@@ -23,6 +23,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QLocale::setDefault(QLocale::English);
     QCoreApplication::setOrganizationDomain("awce.com");
     QCoreApplication::setOrganizationName("awce");
     QCoreApplication::setApplicationName("QRigol");
