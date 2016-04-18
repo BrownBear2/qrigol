@@ -1,6 +1,15 @@
 # qrigol - A control program for the Rigol DS2000 series oscilloscopes (forked)
 
 This is a fork of qrigol that was changed to control a DS2000 over LAN (using libvxi11).
+
+# New features:
+
+
+* Support for DS2000
+* Support for LAN via libvxi11 (USB removed)
+* Live view of the waveform displayed
+
+
 Below is the README of the original qrigol:
 
 
