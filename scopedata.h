@@ -64,7 +64,7 @@ public:
     int cmdCharIndex(const QString &cmd,const QString &search,int bpos=0);
     int acqMode(void) { command(":ACQ:MODE?"); return *com.buffer; }
     int average(void) { return (int)cmdFloat(":ACQ:AVER?"); }
-    bool isLongMemory(void) { command(":ACQ:MDEP?"); return *com.buffer=='L'; }
+    QString acqMem(void) { return stringCmd(":ACQ:MDEP?"); }
     float sampleRate(void) { return cmdFloat(":ACQ:SRAT?"); }
     int numChannels(void) { return 2; }
     int scale(int *decade,int *sign);
@@ -88,8 +88,7 @@ public:
     bool setAcqModeRtim(void) { return command(":ACQ:MODE RTIM"); }
     bool setAcqModeEtim(void) { return command(":ACQ:MODE ETIM"); }
     bool setAcqAverage(int n) { return command(":ACQ:AVER "+QString::number(n)); }
-    bool setAcqMemNorm(void) { return command(":ACQ:MDEP 14000");  }
-    bool setAcqMemLong(void) { return command(":ACQ:MDEP 56000000"); }
+    bool setAcqMem(QString dep) { return command(":ACQ:MDEP " + dep);  }
     bool setTimeScale(const QString &s) { return command(":TIM:SCAL "+s); }
     bool setTimeOffsetUs(float f) { return command(":TIM:OFFS "+QString::number(f/1000000.0f)); }
     bool setChanDisp(int chan,bool state) { return command(QString(":CHAN")+QString::number(chan)+":DISP "+ (state?"ON":"OFF")); }

@@ -45,7 +45,7 @@ private slots:
     void on_acqType_currentIndexChanged(int index);
     void on_acqMode_currentIndexChanged(int index);
     void on_acqAvg_currentIndexChanged(int index);
-    void on_acqMem_clicked();
+    void on_acqMem_currentIndexChanged(int index);
     void on_hscale_currentIndexChanged(int index);
     void on_cdisp1_clicked();
     void on_updAcq_2_clicked();
@@ -96,12 +96,10 @@ private slots:
     void on_exportButton_clicked();
     void on_exportFmt_currentIndexChanged(int index);
     void on_action_Help_triggered();
-
     void on_startStopLive_clicked();
-
     void on_bmpsnap_clicked();
-
     void on_rfr_valueChanged(int value);
+    void on_liveSingle_clicked();
 
 private:
     Ui::MainWindow *ui;

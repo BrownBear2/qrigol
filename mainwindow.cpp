@@ -463,7 +463,15 @@ void MainWindow::on_updAcq_clicked()  // this function updates the ui from the s
     }
 
     ui->acqAvg->setCurrentIndex(idx);
-    ui->acqMem->setChecked(scope.isLongMemory());
+    QString mem = scope.acqMem();
+
+    idx = ui->acqMem->findText(mem, Qt::MatchStartsWith);
+    if (idx == -1)
+    {
+        idx = ui->acqMem->findText(QString::number(mem.toInt() * 2));
+    }
+
+    ui->acqMem->setCurrentIndex(idx);
     ui->srate->setText(QString::number(scope.sampleRate() / 1e6,'f',0) + " MHz");
 
 
@@ -619,14 +627,17 @@ void MainWindow::on_acqAvg_currentIndexChanged(int index)
     scope.setAcqAverage(1<<(index+1));
 }
 
-
-void MainWindow::on_acqMem_clicked()
+void MainWindow::on_acqMem_currentIndexChanged(int)
 {
     if (!scope.connected()) return;
-    if (ui->acqMem->isChecked()) scope.setAcqMemLong(); else scope.setAcqMemNorm();
+    QString val = ui->acqMem->currentText();
+    if (val != "Auto" && ui->cdisp1->isChecked() && ui->cdisp2->isChecked())
+    {
+        int n = val.toInt();
+        val = QString::number(n / 2);
+    }
+    scope.setAcqMem(val);
 }
-
-
 
 void MainWindow::on_hscale_currentIndexChanged(int index)
 {
