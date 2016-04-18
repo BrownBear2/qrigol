@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>791</width>
-    <height>787</height>
+    <height>791</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,10 +19,10 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_6">
-    <item row="0" column="0">
+    <item row="0" column="1">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="status">
        <attribute name="title">
@@ -185,6 +185,12 @@
            </item>
            <item row="0" column="1">
             <widget class="QComboBox" name="c1coup">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="toolTip">
               <string>Select coupling</string>
              </property>
@@ -252,38 +258,6 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="c1bw">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Enable bandwidth limiting</string>
-             </property>
-             <property name="text">
-              <string>BW Limit</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="c1filt">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Enable filtering</string>
-             </property>
-             <property name="text">
-              <string>Filter</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="2">
             <widget class="QComboBox" name="c1probe">
              <property name="sizePolicy">
@@ -302,12 +276,52 @@
              </item>
              <item>
               <property name="text">
+               <string>10X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.01X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.02X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.05X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.1X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.2X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.5X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>5X</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>10X</string>
+               <string>20X</string>
               </property>
              </item>
              <item>
@@ -318,6 +332,11 @@
              <item>
               <property name="text">
                <string>100X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>200X</string>
               </property>
              </item>
              <item>
@@ -346,6 +365,34 @@
              <item>
               <property name="text">
                <string>2mV</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="c1bw">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Configure to match the probe attentuation for the specificed channel</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>OFF</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>20M</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>100M</string>
               </property>
              </item>
             </widget>
@@ -450,8 +497,8 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QCheckBox" name="c2bw">
+           <item row="1" column="3">
+            <widget class="QComboBox" name="c2vscale">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -459,27 +506,13 @@
               </sizepolicy>
              </property>
              <property name="toolTip">
-              <string>Enable bandwidth limiting</string>
+              <string>Vertical sensitivity</string>
              </property>
-             <property name="text">
-              <string>BW Limit</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QCheckBox" name="c2filt">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Enable filtering</string>
-             </property>
-             <property name="text">
-              <string>Filter</string>
-             </property>
+             <item>
+              <property name="text">
+               <string>2mV</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="2">
@@ -500,12 +533,52 @@
              </item>
              <item>
               <property name="text">
+               <string>10X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.01X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.02X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.05X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.1X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.2X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>0.5X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>5X</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>10X</string>
+               <string>20X</string>
               </property>
              </item>
              <item>
@@ -520,6 +593,11 @@
              </item>
              <item>
               <property name="text">
+               <string>200X</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>500X</string>
               </property>
              </item>
@@ -530,8 +608,8 @@
              </item>
             </widget>
            </item>
-           <item row="1" column="3">
-            <widget class="QComboBox" name="c2vscale">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="c2bw">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -539,11 +617,21 @@
               </sizepolicy>
              </property>
              <property name="toolTip">
-              <string>Vertical sensitivity</string>
+              <string>Configure to match the probe attentuation for the specificed channel</string>
              </property>
              <item>
               <property name="text">
-               <string>2mV</string>
+               <string>OFF</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>20M</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>100M</string>
               </property>
              </item>
             </widget>
@@ -560,22 +648,6 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
           <layout class="QFormLayout" name="formLayout_3">
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="mathdisp">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Turn on math or FFT display</string>
-             </property>
-             <property name="text">
-              <string>Math/FFT Display</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="1">
             <widget class="QComboBox" name="mathsel">
              <property name="sizePolicy">
@@ -589,17 +661,22 @@
              </property>
              <item>
               <property name="text">
-               <string>A+B</string>
+               <string>ADD</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>A-B</string>
+               <string>SUB</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>A*B</string>
+               <string>MUL</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>DIV</string>
               </property>
              </item>
              <item>
@@ -607,11 +684,31 @@
                <string>FFT</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string>LOG</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>ADV</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>OFF</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_54">
+             <property name="text">
+              <string>Math Operation:</string>
+             </property>
             </widget>
            </item>
           </layout>
-          <zorder>mathsel</zorder>
-          <zorder>mathdisp</zorder>
          </widget>
         </item>
         <item>
@@ -1357,12 +1454,12 @@
              </item>
              <item>
               <property name="text">
-               <string>HF</string>
+               <string>HFReject</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>LF</string>
+               <string>LFReject</string>
               </property>
              </item>
             </widget>
@@ -1449,34 +1546,11 @@
                <string>Negative</string>
               </property>
              </item>
-            </widget>
-           </item>
-           <item>
-            <widget class="QDoubleSpinBox" name="tedgesense">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Edge sensitivity</string>
-             </property>
-             <property name="prefix">
-              <string>Sensitivity </string>
-             </property>
-             <property name="suffix">
-              <string> div</string>
-             </property>
-             <property name="minimum">
-              <double>0.100000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.100000000000000</double>
-             </property>
+             <item>
+              <property name="text">
+               <string>RFAL (rising and falling)</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item>
@@ -1514,38 +1588,38 @@
              </property>
              <item>
               <property name="text">
-               <string>+GREATER THAN</string>
+               <string>+ &gt; L</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>+LESS THAN</string>
+               <string>+ &lt; U</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>+EQUAL</string>
+               <string>L &lt; + &lt; U</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>-GREATER THAN</string>
+               <string>- &gt; L</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>-LESS THAN</string>
+               <string>- &lt; U</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>-EQUAL</string>
+               <string>L &lt; - &lt; U</string>
               </property>
              </item>
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="tpulswid">
+            <widget class="QDoubleSpinBox" name="tpulsuwid">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -1556,7 +1630,7 @@
               <string>Pulse width for trigger</string>
              </property>
              <property name="prefix">
-              <string>Width </string>
+              <string>Upper Width </string>
              </property>
              <property name="suffix">
               <string>us</string>
@@ -1573,7 +1647,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="tpulsesense">
+            <widget class="QDoubleSpinBox" name="tpulslwid">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -1581,22 +1655,22 @@
               </sizepolicy>
              </property>
              <property name="toolTip">
-              <string>Trigger sensitivity</string>
+              <string>Pulse width for trigger</string>
              </property>
              <property name="prefix">
-              <string>Sensitivity </string>
+              <string>Lower Width </string>
              </property>
              <property name="suffix">
-              <string> div</string>
+              <string>us</string>
              </property>
              <property name="minimum">
-              <double>0.100000000000000</double>
+              <double>0.020000000000000</double>
              </property>
              <property name="maximum">
-              <double>1.000000000000000</double>
+              <double>10000000.000000000000000</double>
              </property>
              <property name="singleStep">
-              <double>0.100000000000000</double>
+              <double>5.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -1687,34 +1761,6 @@
              </property>
              <property name="maximum">
               <double>10000000.000000000000000</double>
-             </property>
-             <property name="singleStep">
-              <double>0.100000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QDoubleSpinBox" name="tslopesense">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Slope trigger sensitivity</string>
-             </property>
-             <property name="prefix">
-              <string>Sensitivity </string>
-             </property>
-             <property name="suffix">
-              <string> div</string>
-             </property>
-             <property name="minimum">
-              <double>0.100000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>1.000000000000000</double>
              </property>
              <property name="singleStep">
               <double>0.100000000000000</double>
@@ -3430,7 +3476,7 @@
      <x>0</x>
      <y>0</y>
      <width>791</width>
-     <height>30</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -3461,6 +3507,107 @@
    <addaction name="actionRun_Stop"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="floating">
+    <bool>true</bool>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout_13">
+     <item row="5" column="0" colspan="2">
+      <spacer name="verticalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label_55">
+       <property name="text">
+        <string>Live View</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <spacer name="verticalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="7" column="0">
+      <widget class="QPushButton" name="liveSingle">
+       <property name="text">
+        <string>single</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QPushButton" name="startStopLive">
+       <property name="text">
+        <string>start / stop</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="dsp">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_9">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+    <zorder>startStopLive</zorder>
+    <zorder>verticalSpacer_6</zorder>
+    <zorder>verticalSpacer_7</zorder>
+    <zorder>label_55</zorder>
+    <zorder>liveSingle</zorder>
+   </widget>
+  </widget>
   <action name="action_About">
    <property name="text">
     <string>&amp;About...</string>
@@ -3528,7 +3675,6 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>connectButton</tabstop>
   <tabstop>unlockBtn</tabstop>
   <tabstop>rsButton</tabstop>
@@ -3538,19 +3684,13 @@
   <tabstop>c1coup</tabstop>
   <tabstop>c1inv</tabstop>
   <tabstop>c1offspin</tabstop>
-  <tabstop>c1bw</tabstop>
-  <tabstop>c1filt</tabstop>
   <tabstop>c1probe</tabstop>
   <tabstop>c1vscale</tabstop>
   <tabstop>cdisp2</tabstop>
   <tabstop>c2coup</tabstop>
   <tabstop>c2inv</tabstop>
   <tabstop>c2offspin</tabstop>
-  <tabstop>c2bw</tabstop>
-  <tabstop>c2filt</tabstop>
-  <tabstop>c2probe</tabstop>
   <tabstop>c2vscale</tabstop>
-  <tabstop>mathdisp</tabstop>
   <tabstop>mathsel</tabstop>
   <tabstop>updAcq_2</tabstop>
   <tabstop>hoffsetspin</tabstop>
@@ -3571,13 +3711,10 @@
   <tabstop>tforce</tabstop>
   <tabstop>tfifty</tabstop>
   <tabstop>tposneg</tabstop>
-  <tabstop>tedgesense</tabstop>
   <tabstop>tpulsemode</tabstop>
-  <tabstop>tpulswid</tabstop>
-  <tabstop>tpulsesense</tabstop>
+  <tabstop>tpulsuwid</tabstop>
   <tabstop>tslopemode</tabstop>
   <tabstop>tslopetime</tabstop>
-  <tabstop>tslopesense</tabstop>
   <tabstop>tslopewin</tabstop>
   <tabstop>tslopea</tabstop>
   <tabstop>tslopeb</tabstop>

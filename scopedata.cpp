@@ -91,29 +91,18 @@ QString ScopeData::triggerSource(const QString &mode)
     return rv;
 }
 
-
-QString ScopeData::sweep(const QString &mode)
-{
-    QString cmd=":TRIG:";
-    QString rv;
-    cmd+=mode+":SWE?";
-    command(cmd);
-    rv=com.buffer;
-    return rv;
-}
-
 void ScopeData::setConfig(void)
 {
     QString cmdbase,cmd;
     config.hscale=cmdFloat(":TIM:SCAL?");
     config.hoffset=cmdFloat(":TIM:OFFS?");
 
-    config.vscale[0]=cmdFloat(":CHAN1:SCAL?");
-    config.voffset[0]=cmdFloat(":CHAN1:OFFS?");
-    config.vscale[1]=cmdFloat(":CHAN2:SCAL?");
-    config.voffset[1]=cmdFloat(":CHAN2:OFFS?");
-    config.srate=cmdFloat(":ACQ:SAMP? CHAN1");
-    config.deltat=1.0f/config.srate;
+    config.vscale[0]  = cmdFloat(":CHAN1:SCAL?");
+    config.voffset[0] = cmdFloat(":CHAN1:OFFS?");
+    config.vscale[1]  = cmdFloat(":CHAN2:SCAL?");
+    config.voffset[1] = cmdFloat(":CHAN2:OFFS?");
+    config.srate  = cmdFloat(":ACQ:SRAT?");
+    config.deltat = 1.0f / config.srate;
     config.set=true;
 }
 
@@ -192,9 +181,8 @@ int ScopeData::fillExportBuffer(bool c1, bool c2,bool raw)
 {
     int asize,wsize=0;
     // Now we can really compute the size
-    command(":WAV:POIN:MODE MAX");
-    command(":ACQ:MEMD?");
-    asize=com.buffer[0]=='L'?524288:8192;   // now it will be right
+    command(":WAV:POIN?");
+    asize = QString(com.buffer).toInt();
     if ((c1&&!c2) || (c2&&!c1)) asize*=2;   // one channel is double
 
     // allocate buffers
@@ -218,7 +206,9 @@ int ScopeData::fillExportBuffer(bool c1, bool c2,bool raw)
     // Acquire each channel (as requested)
     if (c1)
     {
-        wsize=convertbuf(1,":WAV:DATA? CHAN1",raw);
+        command(":WAV:SOUR CHAN1");
+        command(":WAV:MODE NORM");
+        wsize=convertbuf(1,":WAV:DATA?",raw);
         if (wsize<0)
         {
             QMessageBox bx;
@@ -228,7 +218,7 @@ int ScopeData::fillExportBuffer(bool c1, bool c2,bool raw)
     }
     if (c2)
     {
-        wsize=convertbuf(2,":WAV:DATA? CHAN2",raw);
+        wsize=convertbuf(2,":WAV:DATA?",raw);
         if (wsize<0)
         {
             QMessageBox bx;

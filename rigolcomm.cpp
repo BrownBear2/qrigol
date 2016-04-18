@@ -23,36 +23,37 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include <QDebug>
 
 
 // The intent of this file is to just read/write
 // the device in a very raw way
 
-
-
-static const int max_cmd_len=255;
-static const int max_resp_len=2*512*1024+10; // 10 byte header on newer scopes
+static const int max_cmd_len = 255;
+static const int max_resp_len = 56000000+10; // 10 byte header on newer scopes
 
 RigolComm::RigolComm()
 {
-    _buffer=NULL;
-    data_size=0;
+    buffer = NULL;
+    data_size = 0;
+    isConnected = false;
 }
 
 RigolComm::~RigolComm()
 {
-    if (buffer) free(_buffer);
+    if (buffer) free(buffer);
+    isConnected = false;
 }
 
 int RigolComm::open(const char *device)
 {
-    fd=::open(device,O_RDWR);
-    if (fd>0)
-    {
-        _buffer=(char *)malloc(max_resp_len+1);
-        buffer=_buffer;
-    }
-   return fd>0 && buffer!=NULL;
+    strcpy(ip, device);
+    if (vxi11_open_device(&clink, device, "scope"))
+        return 0;
+
+    buffer = (char*)malloc(max_resp_len + 1);
+    isConnected = true;
+    return buffer != NULL;
 }
 
 int RigolComm::unlock()
@@ -62,51 +63,34 @@ int RigolComm::unlock()
 
 int RigolComm::close(void)
 {
-    if (fd>=0)
-    {
-        unlock();
-        ::close(fd);
-    }
-    if (_buffer) free(_buffer);
-    _buffer=NULL;
+    vxi11_close_device(clink, ip);
+    isConnected = false;
+    if (buffer) free(buffer);
+    buffer = NULL;
     return 0;
 }
 
 int RigolComm::send(const char *command)
 {
-     int size;
-     char buf[max_cmd_len+2];
-     if (!connected()) return -1;
-     if (strlen(command)>max_cmd_len) return -1;
-     strncpy(buf,command,max_cmd_len);
-     strcat(buf,"\n");
-     buf[max_cmd_len+1]='\0';
-     size=::write(fd,buf,strlen(buf));
-     return size<0?size:0;
-}
-
-// Returns 0 for anything other than data buffers
-// Databuffers return size of data in buffer
-// There is at least one report that the OLD_PROTOCOL handling in this routine is not working
-int RigolComm::get_data_size(int rawsize)
- {
-     int rv;
-     char csize[9];
-     buffer=_buffer;
-     if (_buffer[0]!='#' || _buffer[1]!='8' || getenv("RIGOL_USE_OLD_PROTOCOL")) return rawsize<512?0:rawsize;
-     strncpy(csize,_buffer+2,sizeof(csize)-1);
-     csize[sizeof(csize)-1]='\0';  // comment that used to be here was incorrect ;-)
-     rv=atoi(csize);
-     return rv;
+    strcpy(lastCmd, command);
+    return vxi11_send(clink, command, strlen(command));
 }
 
 int RigolComm::recv(void)
 {
-    int siz;
-    if (!connected()) return -1;
-    siz=::read(fd,_buffer,max_resp_len);
-    if (siz>0 && siz<max_resp_len) _buffer[siz]='\0';
-    return siz<0?siz:get_data_size(siz);
+    data_size = vxi11_receive(clink, buffer, max_resp_len);
+    if (data_size > 2)
+    {
+        buffer[data_size - 1] = 0;
+        data_size -= 1;
+    }
+
+    else if (data_size < -15)
+    {
+        qDebug() << "invalid command:" << lastCmd;
+    }
+
+    return data_size;
 }
 
 float RigolComm::toFloat(void)

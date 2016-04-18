@@ -32,6 +32,7 @@ FORMS    += mainwindow.ui \
     plotdialog.ui \
     helpdialog.ui
 
+LIBS += -lvxi11
 
 OTHER_FILES += \
     README.md \
